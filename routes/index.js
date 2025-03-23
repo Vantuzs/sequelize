@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const UserController = require('../controllers/User.controller');
+const TaskController = require('../controllers/Task.controller')
 
 const router = Router();
 
@@ -13,6 +14,14 @@ router.get('/user/:id', UserController.findByPk);
 router.delete('/user/:id', UserController.deleteByPk);
 // PUT http://localhost:5000/api/user/25
 router.put('/user/:id', UserController.updateUser);
+
+
+// POST http://localhost:5000/api/task/5
+router.post('/task/:userId', TaskController.createTask)
+// GET http://localhost:5000/api/tasks/5
+router.get('/tasks/:userId', TaskController.getAllUserTasks)
+// GET http://localhost:5000/api/tasks-count/5
+router.get('/tasks-count/:userId', TaskController.getCountOfTasks);
 
 
 module.exports = router;
