@@ -24,11 +24,9 @@ module.exports.findAll = async(req, res, next) => {
 
 module.exports.findByPk = async(req, res, next) => {
     try {
-        const { params: { id } } = req;
+        const { userInstance } = req;
 
-        const foundUser = await User.findByPk(id);
-
-        return res.status(200).send(foundUser);
+        return res.status(200).send(userInstance);
     } catch (error) {
         next(error);
     }
@@ -36,11 +34,11 @@ module.exports.findByPk = async(req, res, next) => {
 
 module.exports.deleteByPk = async(req, res, next) => {
     try {
-        const { params: { id } } = req;
+        const { params: { userId } } = req;
 
         const rowsCount = await User.destroy({
             where: {
-                id
+                userId
             }
         });
 
@@ -73,12 +71,10 @@ module.exports.deleteByPk = async(req, res, next) => {
 
 module.exports.updateUser = async(req,res,next) =>{
     try {
-        const { params: { id }, body } = req;
+        const { userInstance, body } = req;
 
-        //1. Находим того конкретного юзера, действия над котоырм нужно сделать
-        const foundUser = await User.findByPk(id);
         //2. Сделать над найденым в п.1 юзером те действия, которые нужно
-        const result = await foundUser.update(body);
+        const result = await userInstance.update(body);
 
         //3. Закрываем соединение с клиентов и возвращаем результат
         return res.status(200).send(result);
