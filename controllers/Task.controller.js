@@ -1,48 +1,40 @@
-const {Task,User} = require('../models/index');
+const { Task, User } = require('../models');
 
-module.exports.createTask = async(req,res,next) => {
+module.exports.createTask = async(req, res, next) => {
     try {
-        const {body,userInstance} = req;
+        const { body, userInstance } = req;
         
-        // 2. Нужно добавить найденому юзеру таски
-        // parent.createChild(body)
+        // parent.createChild(body);
         const result = await userInstance.createTask(body);
-        
-        
-        return res.status(201).send(result) ;
 
+        return res.status(201).send(result);
     } catch (error) {
-        next(error)
-    }
-};
-
-
-module.exports.getAllUserTasks = async(req,res,next) => {
-    try {
-        const { userInstance } = req;
-
-        //2.Нужно вытянуть все такси найденого юзера
-        // parent.getChildren()
-
-        const tasks = userInstance.getTasks();
-
-        return res.status(200).send(tasks);
-    } catch (error) {
-        next(error)
+        next(error);
     }
 }
 
-module.exports.getCountOfTasks = async(req,res,next) =>{
+module.exports.getAllUserTasks = async(req, res, next) => {
     try {
-        
         const { userInstance } = req;
+        
+        // parent.getChildren()
+        const tasks = await userInstance.getTasks();
 
-        // 2. Посчитать количество найденых тасок юзера 
+        return res.status(200).send(tasks);
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports.getCountOfTasks = async(req, res, next) => {
+    try {
+        const { userInstance } = req;
+        
         // parent.countChildren()
         const tasksCount = await userInstance.countTasks();
 
-        return res.status(200).send(`${tasksCount}`)
+        return res.status(200).send(`${tasksCount}`);
     } catch (error) {
-        next(error)
+        next(error);
     }
 }

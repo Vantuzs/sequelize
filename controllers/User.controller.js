@@ -38,7 +38,7 @@ module.exports.deleteByPk = async(req, res, next) => {
 
         const rowsCount = await User.destroy({
             where: {
-                userId
+                id: userId
             }
         });
 
@@ -69,16 +69,16 @@ module.exports.deleteByPk = async(req, res, next) => {
 //     }
 // }
 
-module.exports.updateUser = async(req,res,next) =>{
+module.exports.updateUser = async(req, res, next) => {
     try {
-        const { userInstance, body } = req;
+        const { body } = req;
 
-        //2. Сделать над найденым в п.1 юзером те действия, которые нужно
+        const { userInstance } = req;
+        
         const result = await userInstance.update(body);
-
-        //3. Закрываем соединение с клиентов и возвращаем результат
+        
         return res.status(200).send(result);
     } catch (error) {
-        next(error)
+        next(error);
     }
 }

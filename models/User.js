@@ -11,8 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasMany(models.Task,{
+      User.hasMany(models.Task, {
         foreignKey: 'userId'
+      });
+
+      User.belongsToMany(models.Group, {
+        through: 'users_to_groups',
+        foreignKey: 'userId' // зовнішній ключ, який буде представляти модель юзера
       });
     }
   }

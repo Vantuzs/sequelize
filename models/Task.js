@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Task.belongsTo(models.User,{
+      Task.belongsTo(models.User, {
         foreignKey: 'userId'
       });
     }
@@ -27,14 +27,13 @@ module.exports = (sequelize, DataTypes) => {
       field: 'is_done',
       type: DataTypes.BOOLEAN,
       allowNull: false
-
     },
     deadline: {
-      type:DataTypes.DATE,
+      type: DataTypes.DATE,
       validate: {
         isDate: true
       }
-    }
+    },
   }, {
     sequelize,
     modelName: 'Task',
@@ -45,10 +44,9 @@ module.exports = (sequelize, DataTypes) => {
 };
 
 
+/* Як створити зв'язок між моделями?
 
-/*  Как создать связь между моделями
-
-+ 1. На уровне таблиц (миграции) иметь столбци с внешним ключем (implement foreing key)
-- 2. Прописать асоциации (связи) на уровне моделей (метод associate в моделе)
++ 1. На рівні таблиць (міграції) мати стовпці з зовнішнім ключем (implement foreign key)
++ 2. Прописати асоціації (зв'язки) на рівні моделей (метод associate в моделі)
 
 */
